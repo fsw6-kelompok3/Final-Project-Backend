@@ -23,6 +23,14 @@ module.exports = (sequelize, DataTypes) => {
     nohp: DataTypes.STRING,
     level: DataTypes.STRING
   }, {
+    hooks: {
+      beforeCreate : (record, options) => {
+        record.password = bcrypt.hashSync(record.password, 10)
+      },
+      afterCreate: (record) => {
+        console.log(record);
+      }
+    },
     sequelize,
     modelName: 'User',
   });
