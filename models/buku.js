@@ -27,5 +27,8 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Buku',
   });
+  Buku.associate = function (models) {
+    Buku.hasMany(models.Kategori)
+  }
   return Buku;
 };
