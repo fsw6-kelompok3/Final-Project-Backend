@@ -19,5 +19,8 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Kategori',
   });
+  Kategori.associate = function (models) {
+    Kategori.belongsTo(models.Buku)
+  }
   return Kategori;
 };
