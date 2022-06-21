@@ -14,5 +14,6 @@ router.delete('/v1/buku/:id', BukuController.deleteBuku)
 router.get('/', function (req, res, next) {
   res.render('index', { title: 'Express' });
 });
+router.use('/auth', require('./users'));
 
 module.exports = router;

@@ -1,34 +1,57 @@
-const bcrypt = require("bcryptjs");
 const { User } = require('../models')
+var bcrypt = require('bcrypt');
+const jwt = require('../helper/jwt')
 
 module.exports = class {
     static async addUser(req, res, next) {
-        User.create(req.body)
-            .then((result) => {
-                res.status(201).send({
-                    status:201,
-                    message: "User berhasil dibuat",
-                    data: result,
-                })
+        try {
+            const user = await User.create({
+                nama: req.body.nama,
+                password: req.body.password,
+                email: req.body.email,
+                level:"user"
             })
-            .catch((err) => {
-                res.status(400).send(err)
+            res.status(200).send({
+                status: 200,
+                message: 'Data User Ditambahkan!',
+                data: user
             })
+        } catch (error) {
+            console.log(error);
+            res.status(500).send(error)
+        }
     }
-
+    static async addAdmin (req, res, next) {
+        try {
+            const user = await User.create({
+                username: req.body.username,
+                password: req.body.password,
+                email: req.body.email,
+                level:"admin",
+            })
+            res.status(200).send({
+                status: 200,
+                message: 'Data Admin Ditambahkan!',
+                data: user 
+            })
+        } catch (error) {
+            console.log(error);
+            res.status(500).send(error)
+        }
+    }
     static getAllUser(req, res, next) {
         User.findAll({
-            whare: {...req.query},
+            whare: { ...req.query },
         })
             .then((result) => {
                 res.status(200).send({
-                    status:201,
+                    status: 201,
                     data: result,
                 })
             })
             .catch((result) => {
                 res.status(400).send(err)
-            }) 
+            })
     }
 
     static async login (req, res, next) {
@@ -49,23 +72,22 @@ module.exports = class {
                     message: 'Email and password not match!',
                    }) 
             }
-        
+            const token = jwt.generateToken({email: user.email, password: user.password})
             const secureUser = user.dataValues
-            
-            req.session.isAuthenticated = true;
-            req.session.user = secureUser;
+            delete secureUser.password
 
             res.status(200).send({
                 status: 200,
                 message: 'User found!',
                 data: {
                     user: secureUser,
+                    token: token
                 }
                }) 
         } catch (error) {
             console.log(error);
             res.status(500).send(error)
         }
-    }
-    
+}
+
 }

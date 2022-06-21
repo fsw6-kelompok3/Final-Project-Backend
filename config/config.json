@@ -1,14 +1,14 @@
 {
   "development": {
     "username": "postgres",
-    "password": "fadillah",
+    "password": "annielmiftasya5",
     "database": "sewa_buku",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
-    "password": "fadillah",
+    "password": "annielmiftasya5",
     "database": "sewa_buku",
     "host": "127.0.0.1",
     "dialect": "mysql"
