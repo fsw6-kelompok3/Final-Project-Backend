@@ -57,7 +57,6 @@ module.exports = class {
                 kategori_id,
                 diminati: null
             })
-
             res.status(201).json(buku)
         } catch (err) {
             res.status(422).json({
@@ -88,6 +87,8 @@ module.exports = class {
     // edit detail buku
     static async editDetailBuku(req, res, next) {
         try {
+            const url = `/uploads/${req.file.filename}`
+
             const {
                 nama,
                 deskripsi,
@@ -101,7 +102,7 @@ module.exports = class {
             const buku = await Buku.update({
                 nama,
                 deskripsi,
-                gambar,
+                gambar: url,
                 harga,
                 lokasi,
                 pengarang,
@@ -125,7 +126,6 @@ module.exports = class {
             await Buku.destroy({
                 where: { id: req.params.id }
             })
-
             res.status(204).end()
         } catch (err) {
             res.status(422).json({
