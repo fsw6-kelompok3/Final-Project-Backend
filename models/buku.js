@@ -22,7 +22,8 @@ module.exports = (sequelize, DataTypes) => {
     pengarang: DataTypes.STRING,
     tahun_terbit: DataTypes.INTEGER,
     kategori_id: DataTypes.INTEGER,
-    diminati: DataTypes.INTEGER
+    diminati: DataTypes.INTEGER,
+    seller_id: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Buku',
