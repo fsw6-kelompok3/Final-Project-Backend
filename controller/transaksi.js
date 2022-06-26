@@ -15,6 +15,23 @@ module.exports = class {
                 message: 'Data transaksi berhasil ditambah!',
                 data: hasil
             })
+
+            const {
+                id_barang,
+                id_user,
+                pesetujuan_harga,
+                harga_tawar,
+            } = req.body
+
+            const transaksi = await Transaksi.create({
+                id_barang,
+                id_user,
+                pesetujuan_harga,
+                harga_tawar,
+            })
+
+            res.status(201).json(transaksi)
+
         } catch (err) {
             res.status(422).json({
                 error: {
@@ -24,6 +41,7 @@ module.exports = class {
             })
         }
     }
+
 
     static async getdataByUserId(req, res, next) {
         try {
@@ -145,5 +163,6 @@ module.exports = class {
           res.status(500).send(error)
        }
      }
+
 
 }

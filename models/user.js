@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     level: DataTypes.STRING
   }, {
     hooks: {
-      beforeCreate : (record, options) => {
+      beforeCreate: (record, options) => {
         record.password = bcrypt.hashSync(record.password, 10)
       },
       afterCreate: (record) => {

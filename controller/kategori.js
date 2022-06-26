@@ -18,7 +18,7 @@ module.exports = class {
         }
     }
 
-    /* delete data kategori
+    // delete data kategori
     static async deleteKategori(req, res, next) {
         try {
             await Kategori.destroy({
@@ -35,5 +35,4 @@ module.exports = class {
             })
         }
     }
-    */
 }

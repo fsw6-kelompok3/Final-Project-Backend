@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     kategori_id: DataTypes.INTEGER,
     diminati: DataTypes.INTEGER,
     seller_id:DataTypes.INTEGER
+
   }, {
     sequelize,
     modelName: 'Buku',
