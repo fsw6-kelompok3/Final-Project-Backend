@@ -35,6 +35,9 @@ module.exports = {
       diminati: {
         type: Sequelize.INTEGER
       },
+      seller_id: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

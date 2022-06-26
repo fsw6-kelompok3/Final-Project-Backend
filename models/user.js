@@ -35,5 +35,10 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'User',
   });
+ User.associate = function(models) {
+   User.belongsTo(models.transaksi, {
+      foreignKey: 'id',
+    });
+  };
   return User;
 };
