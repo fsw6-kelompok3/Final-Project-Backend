@@ -11,6 +11,7 @@ router.put('/v1/buku/:id', multer.single('gambar'), BukuController.editDetailBuk
 router.delete('/v1/buku/:id', BukuController.deleteBuku)
 
 router.get('/v1/cari', BukuController.searchBuku)
+router.get('/v1/diminati', BukuController.filterDiminati)
 
 router.patch('/v1/buku/:id/like', BukuController.likeDataBuku)
 router.patch('/v1/buku/:id/unlike', BukuController.unlikeDataBuku)
