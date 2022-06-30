@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Kategori',
   });
   Kategori.associate = function (models) {
-    Kategori.belongsTo(models.Buku)
+    Kategori.hasMany(models.Buku, { foreignKey: 'kategori_id' })
   }
   return Kategori;
 };

@@ -57,7 +57,7 @@ module.exports = class {
                 tahun_terbit,
                 kategori_id,
                 diminati: null,
-                seller_id:req.userlogin.id
+                seller_id: req.userlogin.id
             })
             res.status(201).json(buku)
         } catch (err) {
