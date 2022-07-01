@@ -12,11 +12,11 @@ module.exports = async (req, res, next) => {
         })
         if (!user) {
             res.status(404).send({ message: 'user not found' })
-        } else if (user.dataValues.level==="user"){
+        } else if (user.dataValues.level === "user") {
             req.userlogin = user.dataValues
-            next() 
-        }else{
-         res.status(404).send({ message: 'user not found' })
+            next()
+        } else {
+            res.status(404).send({ message: 'user not found' })
         }
     } catch (err) {
         res.status(404).send({

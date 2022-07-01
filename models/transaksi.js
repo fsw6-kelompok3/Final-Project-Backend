@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-     
+
     }
   }
   transaksi.init({
@@ -24,13 +24,13 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'transaksi',
   });
-  transaksi.associate = function(models) {
+  transaksi.associate = function (models) {
     transaksi.belongsTo(models.Buku, {
       foreignKey: 'id_barang',
     });
     transaksi.hasMany(models.User, {
       foreignKey: 'id',
-      as:'detail_user'
+      as: 'detail_user'
     });
   };
   return transaksi;

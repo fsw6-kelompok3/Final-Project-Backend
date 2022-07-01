@@ -1,5 +1,6 @@
 const { Buku } = require('../models')
-const { Op } = require('sequelize')
+const { Op, Sequelize } = require('sequelize')
+const sequelize = new Sequelize('sqlite::memory:')
 
 module.exports = class {
     // get all data buku 
@@ -56,7 +57,7 @@ module.exports = class {
                 tahun_terbit,
                 kategori_id,
                 diminati: null,
-                seller_id:req.userlogin.id
+                seller_id: req.userlogin.id
             })
             res.status(201).json(buku)
         } catch (err) {
@@ -199,6 +200,36 @@ module.exports = class {
                 diminati: (buku.diminati - 1)
             }, { where: { id } })
             res.status(201).send(like)
+        } catch (err) {
+            res.status(422).json({
+                error: {
+                    name: err.name,
+                    message: err.message
+                }
+            })
+        }
+    }
+
+    // filter data buku diminati
+    static async filterDiminati(req, res, next) {
+        try {
+            const page = req.query.page || 1
+            const limit = req.query.pageSize || 2
+
+            const buku = await Buku.findAll({
+                limit,
+                offset: (page - 1) * limit,
+                order: sequelize.fn('max', sequelize.col('diminati'))
+            })
+            const bukuCount = await Buku.count();
+
+            res.status(201).json({
+                data: buku,
+                total_data: bukuCount,
+                pageSize: limit,
+                currentPage: page
+
+            })
         } catch (err) {
             res.status(422).json({
                 error: {
