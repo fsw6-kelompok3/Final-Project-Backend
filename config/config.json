@@ -1,0 +1,32 @@
+{
+    "development": {
+        "username": "aurellieandra",
+        "password": "123456",
+        "database": "sewa_buku",
+        "host": "127.0.0.1",
+        "port": "5432",
+        "dialect": "postgres"
+    },
+    "test": {
+        "username": "aurellieandra",
+        "password": "123456",
+        "database": "sewa_buku",
+        "host": "127.0.0.1",
+        "port": "5432",
+        "dialect": "postgres"
+    },
+    "production": {
+        "username": "root",
+        "password": null,
+        "database": "database_production",
+        "host": "127.0.0.1",
+        "port": "5432",
+        "dialect": "postgres",
+        "dialectOptions": {
+            "ssl": {
+                "require": true,
+                "rejectUnauthorized": false
+            }
+        }
+    }
+}
