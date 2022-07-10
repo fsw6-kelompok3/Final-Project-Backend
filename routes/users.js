@@ -19,7 +19,7 @@ router.get('/v1/user', authUser, UserController.getDataUserById)
 router.put('/v1/admin', authAdmin, multer.single('foto'), UserController.editDetailUser)
 router.put('/v1/user', authUser, multer.single('foto'), UserController.editDetailUser)
 
-router.delete('/v1/admin', authAdmin, UserController.deleteUser)
-router.delete('/v1/user', authUser, UserController.deleteUser)
+router.delete('/v1/admin/:id', authAdmin, UserController.deleteUser)
+router.delete('/v1/user/:id', authUser, UserController.deleteUser)
 
 module.exports = router;

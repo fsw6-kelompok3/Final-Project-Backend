@@ -179,7 +179,7 @@ module.exports = class {
                 tahun_terbit,
                 kategori_id
             }, { where: { id: req.params.id } })
-            res.status(201).send(buku)
+            res.status(201).json({ status: buku, informasi: req.body, foto: newPath })
         } catch (err) {
             res.status(422).json({
                 error: {
@@ -196,7 +196,7 @@ module.exports = class {
             await Buku.destroy({
                 where: { id: req.params.id }
             })
-            res.status(204).end()
+            res.status(201).json({ msg: "Data buku berhasil dihapus!" })
         } catch (err) {
             res.status(422).json({
                 error: {

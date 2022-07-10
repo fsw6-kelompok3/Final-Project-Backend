@@ -157,9 +157,9 @@ module.exports = class {
     static async deleteUser(req, res, next) {
         try {
             await User.destroy({
-                where: { id: req.userlogin.id }
+                where: { id: req.params.id }
             })
-            res.status(204).end()
+            res.status(201).json({ msg: "Data user berhasil dihapus!" })
         } catch (err) {
             res.status(422).json({
                 error: {
