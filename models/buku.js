@@ -11,13 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-
     }
   }
   Buku.init({
     nama: DataTypes.STRING,
     deskripsi: DataTypes.STRING,
-    gambar: DataTypes.STRING,
+    gambar: DataTypes.ARRAY(DataTypes.STRING),
     harga: DataTypes.INTEGER,
     lokasi: DataTypes.STRING,
     pengarang: DataTypes.STRING,
