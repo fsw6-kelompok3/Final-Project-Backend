@@ -37,6 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'id_barang',
       as: 'transaksi_user'
     });
+
   }
   return Buku;
 };
