@@ -5,14 +5,21 @@ const authAdmin = require("../middleware/admin")
 
 const BukuController = require('../controller/buku')
 
-router.get('/v1/buku', BukuController.getAllDataBuku)
-router.post('/v1/buku', authAdmin, multer.single('gambar'), BukuController.tambahBuku)
-router.get('/v1/buku/:id', BukuController.getDataBukuById)
-router.put('/v1/buku/:id', authAdmin, multer.single('gambar'), BukuController.editDetailBuku)
-router.delete('/v1/buku/:id', authAdmin, BukuController.deleteBuku)
+router.get('/seller/buku',authAdmin,BukuController.getAllDataBukuSeller)
+router.post('/seller/buku', authAdmin, multer.single('gambar'), BukuController.tambahBuku)
 
-router.get('/v1/cari', BukuController.searchBuku)
-router.get('/v1/diminati', BukuController.filterDiminati)
+router.delete('/seller/buku/:id', authAdmin, BukuController.deleteBuku)
+router.get('/seller/terjual', authAdmin,BukuController.filterTerjual)
+
+//bug
+router.get('/seller/diminati', authAdmin,BukuController.filterDiminati)
+router.post('/seller/buku/:id', authAdmin, multer.single('gambar'), BukuController.editDetailBuku)
+
+//USER
+router.get('/user/buku', BukuController.getAllDataBuku)
+router.get('/user/buku/:id', BukuController.getDataBukuById)
+router.get('/cari', BukuController.searchBuku)
+
 
 router.patch('/v1/buku/:id/like', BukuController.likeDataBuku)
 router.patch('/v1/buku/:id/unlike', BukuController.unlikeDataBuku)

@@ -1,15 +1,15 @@
 {
   "development": {
-    "username": "aurellieandra",
-    "password": "123456",
+    "username": "postgres",
+    "password": "annielmiftasya5",
     "database": "sewa_buku",
     "host": "127.0.0.1",
     "port": "5432",
     "dialect": "postgres"
   },
   "test": {
-    "username": "aurellieandra",
-    "password": "123456",
+    "username": "postgres",
+    "password": "annielmiftasya5",
     "database": "sewa_buku",
     "host": "127.0.0.1",
     "port": "5432",
