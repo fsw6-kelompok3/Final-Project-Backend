@@ -1,6 +1,8 @@
-const { Buku, transaksi,User} = require('../models')
-const { Op, Sequelize } = require('sequelize')
-const sequelize = new Sequelize('sqlite::memory:')
+const { Buku, transaksi, User } = require('../models')
+const { Op } = require('sequelize')
+const cloudinary = require('../middleware/cloudinary')
+const fs = require('fs')
+const path = require('path')
 
 module.exports = class {
     // get all data buku by Seller Id
@@ -62,7 +64,7 @@ module.exports = class {
     // tambah data buku
     static async tambahBuku(req, res, next) {
         try {
-            const url = `/uploads/${req.file.filename}`
+            // const url = `/uploads/${req.file.filename}`
 
             const {
                 nama,
@@ -75,10 +77,25 @@ module.exports = class {
                 kategori_id
             } = req.body
 
+            const files = req.files
+            const urls = []
+
+            for (const f of files) {
+                // console.log(f)
+                const imageUpload = await cloudinary.uploader.upload(
+                    f.path,
+                    {
+                        upload_preset: "second_hand"
+                    }
+                )
+                const newPath = imageUpload.secure_url
+                urls.push(newPath)
+            }
+
             const buku = await Buku.create({
                 nama,
                 deskripsi,
-                gambar: url,
+                gambar: urls,
                 harga,
                 lokasi,
                 pengarang,
@@ -87,6 +104,7 @@ module.exports = class {
                 diminati: null,
                 seller_id: req.userlogin.id
             })
+
             res.status(201).json(buku)
         } catch (err) {
             res.status(422).json({
@@ -103,12 +121,12 @@ module.exports = class {
         try {
             const id = req.params.id
             const buku = await Buku.findAll({
-                where: {id:id},
+                where: { id: id },
                 include: [{
                     model: User,
                     as: 'penjual',
                 }],
-        })
+            })
             res.status(201).send(buku)
         } catch (err) {
             res.status(422).json({
@@ -123,7 +141,7 @@ module.exports = class {
     // edit detail buku
     static async editDetailBuku(req, res, next) {
         try {
-            const url = `/uploads/${req.file.filename}`
+            // const url = `/uploads/${req.file.filename}`
 
             const {
                 nama,
@@ -135,17 +153,33 @@ module.exports = class {
                 tahun_terbit,
                 kategori_id
             } = req.body
+
+            const files = req.files
+            const urls = []
+
+            for (const f of files) {
+                // console.log(f)
+                const imageUpload = await cloudinary.uploader.upload(
+                    f.path,
+                    {
+                        upload_preset: "second_hand"
+                    }
+                )
+                const newPath = imageUpload.secure_url
+                urls.push(newPath)
+            }
+
             const buku = await Buku.update({
                 nama,
                 deskripsi,
-                gambar: url,
+                gambar: urls,
                 harga,
                 lokasi,
                 pengarang,
                 tahun_terbit,
                 kategori_id
             }, { where: { id: req.params.id } })
-            res.status(201).send(buku)
+            res.status(201).json({ status: buku, informasi: req.body, foto: newPath })
         } catch (err) {
             res.status(422).json({
                 error: {
@@ -162,7 +196,7 @@ module.exports = class {
             await Buku.destroy({
                 where: { id: req.params.id }
             })
-            res.status(204).end()
+            res.status(201).json({ msg: "Data buku berhasil dihapus!" })
         } catch (err) {
             res.status(422).json({
                 error: {
@@ -251,7 +285,7 @@ module.exports = class {
             const limit = req.query.pageSize || 2
 
             const buku = await Buku.findAll({
-                where: { seller_id: req.userlogin.id},
+                where: { seller_id: req.userlogin.id },
                 limit,
                 offset: (page - 1) * limit,
                 order: sequelize.fn('max', sequelize.col('diminati'))
@@ -275,17 +309,17 @@ module.exports = class {
         }
     }
 
-     // filter data buku terjual
+    // filter data buku terjual
     static async filterTerjual(req, res, next) {
         try {
             const page = req.query.page || 1
             const limit = req.query.pageSize || 2
 
             const buku = await Buku.findAll({
-                where: { seller_id: req.userlogin.id},
+                where: { seller_id: req.userlogin.id },
                 include: [{
                     model: transaksi,
-                    where: { status_penjualan:true },
+                    where: { status_penjualan: true },
                     as: 'transaksi_user',
                 }],
                 limit,
@@ -311,6 +345,5 @@ module.exports = class {
         }
     }
 
-    //detail halaman produk 
-
+    //detail halaman produk
 }

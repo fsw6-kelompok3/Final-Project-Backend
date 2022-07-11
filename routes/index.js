@@ -3,8 +3,8 @@ var router = express.Router();
 const authAdmin = require("../middleware/admin")
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express' });
+router.get('/index', function (req, res, next) {
+  res.json({ message: "SecondHand Deploy Success" })
 });
 
 router.use('/auth', require('./users'));

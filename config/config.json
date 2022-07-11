@@ -1,15 +1,15 @@
 {
   "development": {
-    "username": "postgres",
-    "password": "annielmiftasya5",
+    "username": "aurellieandra",
+    "password": "123456",
     "database": "sewa_buku",
     "host": "127.0.0.1",
     "port": "5432",
     "dialect": "postgres"
   },
   "test": {
-    "username": "postgres",
-    "password": "annielmiftasya5",
+    "username": "aurellieandra",
+    "password": "123456",
     "database": "sewa_buku",
     "host": "127.0.0.1",
     "port": "5432",
@@ -24,8 +24,8 @@
     "dialect": "postgres",
     "dialectOptions": {
       "ssl": {
-        "require": "true",
-        "rejectUnauthorized": "false"
+        "require": true,
+        "rejectUnauthorized": false
       }
     }
   }
