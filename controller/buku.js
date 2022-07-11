@@ -106,7 +106,8 @@ module.exports = class {
                 where: {id:id},
                 include: [{
                     model: User,
-                    as: 'penjual',
+                    as: 'penjual_barang',
+                    attributes: ['nama', 'alamat']
                 }],
         })
             res.status(201).send(buku)

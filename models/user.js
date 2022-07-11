@@ -39,6 +39,10 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsTo(models.transaksi, {
       foreignKey: 'id',
     });
+    User.belongsTo(models.Buku, {
+      foreignKey: 'id',
+    });
+   
   };
   return User;
 };
