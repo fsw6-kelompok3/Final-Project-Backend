@@ -10,13 +10,15 @@ const BukuController = require('../controller/buku')
 
 router.get('/seller/buku', authAdmin, BukuController.getAllDataBukuSeller)
 router.post('/seller/buku', authAdmin, multer.array('gambar'), BukuController.tambahBuku)
+router.put('/seller/buku/:id', authAdmin, multer.array('gambar'), BukuController.editDetailBuku)
+router.get('/seller/buku/:id',  authAdmin, BukuController.getDataBukuByIdSeller)
 
 router.delete('/seller/buku/:id', authAdmin, BukuController.deleteBuku)
 router.get('/seller/terjual', authAdmin, BukuController.filterTerjual)
 
 //bug
 router.get('/seller/diminati', authAdmin, BukuController.filterDiminati)
-router.post('/seller/buku/:id', authAdmin, multer.array('gambar'), BukuController.editDetailBuku)
+
 
 //USER
 router.get('/user/buku', BukuController.getAllDataBuku)

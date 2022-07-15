@@ -37,7 +37,14 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'id_barang',
       as: 'transaksi_user'
     });
+    Buku.belongsTo(models.User, {
+      foreignKey: 'seller_id',
+      as: 'penjual_barang'
+    });
 
+    
+
+   
   }
   return Buku;
 };

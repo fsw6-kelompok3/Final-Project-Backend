@@ -39,6 +39,13 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsTo(models.transaksi, {
       foreignKey: 'id',
     });
+
+    User.hasMany(models.Buku, {
+      foreignKey: 'seller_id',
+    });
+
+    
+   
   };
   return User;
 };
