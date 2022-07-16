@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Buku.init({
     nama: DataTypes.STRING,
-    deskripsi: DataTypes.STRING,
+    deskripsi: DataTypes.TEXT,
     gambar: DataTypes.ARRAY(DataTypes.STRING),
     harga: DataTypes.INTEGER,
     lokasi: DataTypes.STRING,

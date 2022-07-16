@@ -12,7 +12,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       deskripsi: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       gambar: {
         type: Sequelize.ARRAY(Sequelize.STRING)

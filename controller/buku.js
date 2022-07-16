@@ -1,8 +1,6 @@
 const { Buku, transaksi, User } = require('../models')
 const { Op } = require('sequelize')
 const cloudinary = require('../middleware/cloudinary')
-const fs = require('fs')
-const path = require('path')
 
 module.exports = class {
     // get all data buku by Seller Id
@@ -264,10 +262,10 @@ module.exports = class {
         try {
             const id = req.params.id
             const buku = await Buku.findByPk(id)
-            const like = await Buku.update({
+            const unlike = await Buku.update({
                 diminati: (buku.diminati - 1)
             }, { where: { id } })
-            res.status(201).send(like)
+            res.status(201).send(unlike)
         } catch (err) {
             res.status(422).json({
                 error: {
