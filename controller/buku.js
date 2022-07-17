@@ -1,6 +1,8 @@
 const { Buku, transaksi, User } = require('../models')
 const { Op } = require('sequelize')
 const cloudinary = require('../middleware/cloudinary')
+const fs = require('fs')
+const { path, newPath } = require('path')
 
 module.exports = class {
     // get all data buku by Seller Id
@@ -13,6 +15,10 @@ module.exports = class {
                 where: { seller_id: req.userlogin.id },
                 limit,
                 offset: (page - 1) * limit,
+                include: [{
+                    model: User,
+                    as: 'penjual_barang',
+                }],
             })
             const bukuCount = await Buku.count();
 
@@ -99,7 +105,7 @@ module.exports = class {
                 pengarang,
                 tahun_terbit,
                 kategori_id,
-                diminati: null,
+                diminati: 0,
                 seller_id: req.userlogin.id
             })
 
@@ -122,7 +128,29 @@ module.exports = class {
                 where: { id: id },
                 include: [{
                     model: User,
-                    as: 'penjual',
+                    as: 'penjual_barang',
+                }],
+            })
+            res.status(201).send(buku)
+        } catch (err) {
+            res.status(422).json({
+                error: {
+                    name: err.name,
+                    message: err.message
+                }
+            })
+        }
+    }
+
+    //get data buku by id seller
+    static async getDataBukuByIdSeller(req, res, next) {
+        try {
+            const id = req.params.id
+            const buku = await Buku.findAll({
+                where: { id: id },
+                include: [{
+                    model: User,
+                    as: 'penjual_barang',
                 }],
             })
             res.status(201).send(buku)
@@ -177,7 +205,7 @@ module.exports = class {
                 tahun_terbit,
                 kategori_id
             }, { where: { id: req.params.id } })
-            res.status(201).json({ status: buku, informasi: req.body, foto: newPath })
+            res.status(201).json({ status: buku, informasi: req.body, foto: urls })
         } catch (err) {
             res.status(422).json({
                 error: {
@@ -284,9 +312,12 @@ module.exports = class {
 
             const buku = await Buku.findAll({
                 where: { seller_id: req.userlogin.id },
+                order: [
+                    ['diminati', 'DESC'],
+                ],
                 limit,
                 offset: (page - 1) * limit,
-                order: sequelize.fn('max', sequelize.col('diminati'))
+
             })
             const bukuCount = await Buku.count();
 
@@ -305,6 +336,7 @@ module.exports = class {
                 }
             })
         }
+
     }
 
     // filter data buku terjual
@@ -342,6 +374,4 @@ module.exports = class {
             })
         }
     }
-
-    //detail halaman produk
 }
