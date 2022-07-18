@@ -4,6 +4,7 @@ var bcrypt = require('bcrypt');
 const cloudinary = require('../middleware/cloudinary')
 const jwt = require('../helper/jwt')
 
+
 module.exports = class {
     // add user
     static async addUser(req, res, next) {
@@ -168,5 +169,13 @@ module.exports = class {
                 }
             })
         }
+    }
+
+    //logout
+    static async logout(req, res, next) {
+        req.user.deleteToken(req.token,(err,user)=>{
+            if(err) return res.status(400).send(err);
+            res.sendStatus(200);
+        });
     }
 }

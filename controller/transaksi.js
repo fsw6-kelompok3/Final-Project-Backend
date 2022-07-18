@@ -65,13 +65,16 @@ module.exports = class {
 
     static async getdataBySellerId(req, res, next) {
         try {
-            const hasil = await Buku.findAll({
-                where: { seller_id: req.userlogin.id },
+            const hasil = await transaksi.findAll({
+                where: { status_penjualan: null },
+                subQuery: true,
+                order: [
+                    ['id', 'DESC'],
+                ],
                 include: [{
-                    model: transaksi,
-                    where: { status_penjualan: null },
-                    subQuery: true,
-                    as: 'transaksi_user',
+                    model: Buku,
+                    where: { seller_id: req.userlogin.id },
+                    as: 'nama_buku',
 
                 }],
             })
