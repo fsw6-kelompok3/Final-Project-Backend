@@ -38,10 +38,12 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = function (models) {
     User.hasMany(models.transaksi, {
       foreignKey: 'id_user',
+     
     });
 
     User.hasMany(models.Buku, {
       foreignKey: 'seller_id',
+      as :'buku'
     });
 
     
