@@ -22,6 +22,7 @@ router.get('/seller/diminati', authAdmin, BukuController.filterDiminati)
 
 //USER
 router.get('/user/buku', BukuController.getAllDataBuku)
+router.get('/user/buku/kategori', BukuController.GetBukubyKategori)
 router.get('/user/buku/:id', BukuController.getDataBukuById)
 router.get('/cari', BukuController.searchBuku)
 

@@ -1,8 +1,9 @@
-const { Buku, transaksi, User } = require('../models')
+const { Buku, transaksi, User,Kategori } = require('../models')
 const { Op } = require('sequelize')
 const cloudinary = require('../middleware/cloudinary')
 const fs = require('fs')
 const {path,newPath} = require('path')
+const kategori = require('../models/kategori')
 
 module.exports = class {
     // get all data buku by Seller Id
@@ -416,4 +417,24 @@ module.exports = class {
     }
 
     //detail halaman produk
+
+    static async GetBukubyKategori(req, res, next) {
+        try {
+            const hasil = await Buku.findAll({
+                include: [{
+                    model: Kategori,
+                    where: { jenis_buku: req.body.jenis_buku },
+                    as: 'kategori',
+                }],
+            })
+            res.status(200).send({
+                status: 200,
+                message: 'Berhasil',
+                data: hasil
+            })
+        } catch (error) {
+            console.log(error);
+            res.status(500).send(error)
+        }
+    }
 }
